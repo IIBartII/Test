@@ -17,7 +17,6 @@ public class MapGenerator : MonoBehaviour
     }
     private void UpdateClass()
     {
-        PlayerTP.transform.position = new Vector2(mapWidth / 2, mapHeight / 2);
         BazaC.mapWidthBaseClass = mapWidth;
         BazaC.mapHeighBaseClass = mapHeight;
         BazaC.tilemap = tilemap;
@@ -34,12 +33,15 @@ public class MapGenerator : MonoBehaviour
             tilemap.ClearAllTiles();
             EnvironmentC.tilemap.ClearAllTiles();
             BazaC.Bariera.ClearAllTiles();
+            reset = false;
+            PlayerTP.transform.position = new Vector2(mapWidth / 2, mapHeight / 2);
         }
         if (baza)
         {
             UpdateClass();
             BazaC.GenerateBase();
             baza = false;
+            PlayerTP.transform.position = new Vector2(mapWidth / 2, mapHeight / 2);
         }
         if (kwiatki)
         {
@@ -67,17 +69,12 @@ public class MapGenerator : MonoBehaviour
         public void GenerateEnvironment()
         {
             tilemap.ClearAllTiles();
-            for (int x = 0; x < EnvironmentMapWidth; x++)
+            for(int i = 0;i < Random.Range(0,szansaNaEnvironment * (EnvironmentMapHeight * EnvironmentMapWidth)) ;i++)
             {
-                for (int y = 0; y < EnvironmentMapHeight; y++)
-                {
-                    szansa = Random.Range(0, szansaNaEnvironment);
-                    if (szansa == 2)
-                    {
-                        Vector3Int tilePosition = new(x, y, 0);
-                        tilemap.SetTile(tilePosition, GetRandomTile());
-                    }
-                }
+                int x = Random.Range(0, EnvironmentMapWidth);
+                int y = Random.Range(0, EnvironmentMapHeight);
+                Vector3Int tilePosition = new(x, y, 0);
+                tilemap.SetTile(tilePosition, GetRandomTile());
             }
         }
         TileBase GetRandomTile()
