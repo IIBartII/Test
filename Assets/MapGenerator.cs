@@ -64,8 +64,9 @@ public class MapGenerator : MonoBehaviour
         [HideInInspector] public int EnvironmentMapHeight;
         public TileBase[] Environment;
         public Tilemap tilemap;
-        private int szansa;
-        public int szansaNaEnvironment = 10;
+        public float szansaNaEnvironment = 1;
+        public float dodEnviroment = 5;
+        public int odlegloscDodEnv = 5;
         public void GenerateEnvironment()
         {
             tilemap.ClearAllTiles();
@@ -75,6 +76,15 @@ public class MapGenerator : MonoBehaviour
                 int y = Random.Range(0, EnvironmentMapHeight);
                 Vector3Int tilePosition = new(x, y, 0);
                 tilemap.SetTile(tilePosition, GetRandomTile());
+                for(int q = 0; q< Random.Range(0, dodEnviroment);q++)
+                {
+                    int xend = x;
+                    int yend = y;
+                    xend += Random.Range(-odlegloscDodEnv, odlegloscDodEnv);
+                    yend += Random.Range(-odlegloscDodEnv, odlegloscDodEnv);
+                    Vector3Int tilePositionend = new(xend, yend, 0);
+                    tilemap.SetTile(tilePositionend, GetRandomTile());
+                }
             }
         }
         TileBase GetRandomTile()

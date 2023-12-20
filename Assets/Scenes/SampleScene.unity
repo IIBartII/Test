@@ -396,6 +396,7 @@ GameObject:
   - component: {fileID: 871710412}
   - component: {fileID: 871710416}
   - component: {fileID: 871710417}
+  - component: {fileID: 871710418}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -489,13 +490,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementC:
-    speed: 5
+    isRunning: 0
+    IsWalking: 0
+    IsDodging: 0
+    WalkSpeed: 3
+    RunSpeed: 5
+    DodgeSpeed: 20
+    dodgeDuration: 0
+    player: {fileID: 0}
     Mov_x: 0
     Mov_y: 0
     Movement_dir: {x: 0, y: 0}
   AnimC:
     pAnim: {fileID: 0}
     pVelocity: {x: 0, y: 0}
+  SoundsC:
+    audiosource: {fileID: 0}
+    Footstep:
+    - {fileID: 8300000, guid: 6169225d3175e004da1bb62db27f82a7, type: 3}
+    - {fileID: 8300000, guid: 1260bc0c9055da449920214c2b3c3cc3, type: 3}
+    - {fileID: 8300000, guid: 975d2443c4e9dbe4c8f043ba0db4500c, type: 3}
+    interval: 0.3
+    isRunning: 0
+    player: {fileID: 0}
   rb: {fileID: 0}
   anim: {fileID: 0}
 --- !u!4 &871710415
@@ -560,6 +577,102 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3, y: 0.5}
   m_EdgeRadius: 0
+--- !u!82 &871710418
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871710411}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 6169225d3175e004da1bb62db27f82a7, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.5
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 0
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1409451811
 GameObject:
   m_ObjectHideFlags: 0
@@ -5387,7 +5500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 781229d4f4c7df048acddcabb2629d54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offsetX_AD: 0.2
+  offsetX_AD: 0.15
   offsetY_AD: 0.35
   offsetX_WS: 0
   offsetY_WS: 0
@@ -5439,19 +5552,19 @@ MonoBehaviour:
   kwiatki: 0
   environment: 0
   tilemap: {fileID: 1704228504}
-  mapWidth: 55
-  mapHeight: 55
+  mapWidth: 500
+  mapHeight: 500
   BazaC:
-    mapWidthBaseClass: 0
-    mapHeighBaseClass: 0
+    mapWidthBaseClass: 1000
+    mapHeighBaseClass: 1000
     Baza: {fileID: 11400000, guid: 83b90cc7e4b0e8e4aa9b179d4cbd810e, type: 2}
     Bariera: {fileID: 276380874}
     barrierOffset: 10
     blokBariery: {fileID: 11400000, guid: a3966a32f8abb5d4b90ea165f72047b2, type: 2}
-    tilemap: {fileID: 0}
+    tilemap: {fileID: 1704228504}
   KwiatkiC:
-    KwiatkimapWidth: 0
-    KwiatkimapHeight: 0
+    KwiatkimapWidth: 1000
+    KwiatkimapHeight: 1000
     Flowers:
     - {fileID: 11400000, guid: ad0aac17e47c00c4e8b0a4a5148e2bd3, type: 2}
     - {fileID: 11400000, guid: 7594f644ccd0f0e468babc7caab9698a, type: 2}
@@ -5484,16 +5597,18 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 86c9f1a680aa76d40be435826ba0dc87, type: 2}
     - {fileID: 11400000, guid: b8bf1c51a5bb3604d80e7ec36cf832e9, type: 2}
     - {fileID: 11400000, guid: e2a315992aa6119498bec1aceb85c7e6, type: 2}
-    tilemap: {fileID: 0}
+    tilemap: {fileID: 1704228504}
     szansaNaKwiatek: 3
   EnvironmentC:
-    EnvironmentMapWidth: 0
-    EnvironmentMapHeight: 0
+    EnvironmentMapWidth: 1000
+    EnvironmentMapHeight: 1000
     Environment:
     - {fileID: 11400000, guid: 44c1a1425f9009d418e6242788f3bae3, type: 2}
     - {fileID: 11400000, guid: f190d0b875cb9184e93cbcb79b0a47eb, type: 2}
     tilemap: {fileID: 1540585426}
-    szansaNaEnvironment: 750
+    szansaNaEnvironment: 0.001
+    dodEnviroment: 5
+    odlegloscDodEnv: 5
 --- !u!4 &1492554898
 Transform:
   m_ObjectHideFlags: 0
@@ -5523,6 +5638,7 @@ GameObject:
   - component: {fileID: 1540585428}
   - component: {fileID: 1540585426}
   - component: {fileID: 1540585427}
+  - component: {fileID: 1540585429}
   m_Layer: 0
   m_Name: Environment
   m_TagString: Untagged
@@ -5632,6 +5748,22 @@ Transform:
   m_Father: {fileID: 1492554898}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!19719996 &1540585429
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1540585425}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0.00001
 --- !u!1 &1704228503
 GameObject:
   m_ObjectHideFlags: 0
