@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
-
+[ExecuteInEditMode]
 public class MapGenerator : MonoBehaviour
 {
     public GameObject PlayerTP;

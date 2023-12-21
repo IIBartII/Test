@@ -25,9 +25,9 @@ public class Player : MonoBehaviour
     {
         SoundsC.SoundHandler();
         MovementC.MovementVoid();
-        rb.velocity = MovementC.Movement_dir;
+        rb.velocity = MovementC.Movement_spd;
         AnimC.AnimacjeVoid();
-        AnimC.pVelocity = MovementC.Movement_dir;
+        AnimC.pVelocity = MovementC.Movement_spd;
     }
     public IEnumerator FootStep()
     {
@@ -104,47 +104,64 @@ public class Player : MonoBehaviour
     [System.Serializable]
     public class MovementClass
     {
-        public bool isRunning, IsWalking, IsDodging;
-        public float WalkSpeed = 5.0f;
-        public float RunSpeed = 10.0f;
-        [Header("Dodge")]
-        public float DodgeSpeed = 20.0f;
-        public float dodgeDuration;
         [HideInInspector] public Player player;
         [HideInInspector] public float Mov_x;
         [HideInInspector] public float Mov_y;
-        public Vector2 Movement_dir;
+        public Vector2 Movement_spd;
+        public bool inputdetect;
+        [Header("Walking")]
+        public bool IsWalking;
+        public float WalkSpeed = 5.0f;
+        [Header("Running")]
+        public bool isRunning;
+        public float RunSpeed = 10.0f;
+        [Header("Dodge")]
+        public bool IsDodging = false;
+        public bool canDodge = true;
+        public float DodgeSpeed = 20.0f;
+        public float dodgeDuration;
+        public float dodgeCooldown;
         public void MovementVoid()
         {
             Mov_x = Input.GetAxis("Horizontal");
             Mov_y = Input.GetAxis("Vertical");
+            inputdetect = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D);
             if (IsDodging) return;
             else
             {
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (!IsDodging && canDodge && Input.GetKeyDown(KeyCode.Space) && (Movement_spd.x != 0f || Movement_spd.y != 0f))
                 {
+                    IsDodging = true;
+                    canDodge = false;
                     player.StartCoroutine(player.Dodge());
-                    Movement_dir = new Vector2(Mov_x, Mov_y) * DodgeSpeed;
                 }
-                if (Input.GetKey(KeyCode.LeftShift))
+                else if (inputdetect && Input.GetKey(KeyCode.LeftShift))
                 {
-                    Movement_dir = new Vector2(Mov_x, Mov_y) * RunSpeed;
+                    Movement_spd = new Vector2(Mov_x, Mov_y) * RunSpeed;
                     isRunning = true;
                     IsWalking = false;
                 }
-                if (!Input.GetKey(KeyCode.LeftShift))
+                else if (inputdetect && !Input.GetKey(KeyCode.LeftShift))
                 {
-                    Movement_dir = new Vector2(Mov_x, Mov_y) * WalkSpeed;
+                    Movement_spd = new Vector2(Mov_x, Mov_y) * WalkSpeed;
                     IsWalking = true;
                     isRunning = false;
+                }
+                else
+                {
+                    Movement_spd = new Vector2(Mov_x, Mov_y) * WalkSpeed;
+                    isRunning = false;
+                    IsWalking = false;
                 }
             }
         }
     }
     public IEnumerator Dodge()
     {
-        MovementC.IsDodging = true;
+        MovementC.Movement_spd = new Vector2(MovementC.Mov_x, MovementC.Mov_y) * MovementC.DodgeSpeed;
         yield return new WaitForSeconds(MovementC.dodgeDuration);
         MovementC.IsDodging = false;
+        yield return new WaitForSeconds(MovementC.dodgeCooldown);
+        MovementC.canDodge = true;
     }
 }
