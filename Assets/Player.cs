@@ -111,14 +111,14 @@ public class Player : MonoBehaviour
         public bool inputdetect;
         [Header("Walking")]
         public bool IsWalking;
-        public float WalkSpeed = 5.0f;
+        public float WalkSpeed = 3.0f;
         [Header("Running")]
         public bool isRunning;
-        public float RunSpeed = 10.0f;
+        public float RunSpeed = 5.0f;
         [Header("Dodge")]
         public bool IsDodging = false;
         public bool canDodge = true;
-        public float DodgeSpeed = 20.0f;
+        public float DodgeSpeed = 10.0f;
         public float dodgeDuration;
         public float dodgeCooldown;
         public void MovementVoid()
