@@ -80,19 +80,84 @@ public class MapGenerator : MonoBehaviour
     [System.Serializable]
     public class FlowersBigClass
     {
+        public KwiatkiClassLow KwiatkiC;
+        public TileBase[] currentTileBase;
         [HideInInspector] public int FlowersBMapWidth;
         [HideInInspector] public int FlowersBMapHeigh;
-        public TileBase[] FlowersBig;
         public Tilemap tilemap;
         public float FlowersChance = 1;
         public float AddtionalFlowers = 5;
         public int AddFlowersDistacne = 5;
         [HideInInspector] private int CurrentFlower;
+        [System.Serializable]
+        public class KwiatkiClassLow
+        {
+            public TileBase[] Kwiatek1;
+            public TileBase[] Kwiatek2;
+            public TileBase[] Kwiatek3;
+            public TileBase[] Kwiatek4;
+            public TileBase[] Kwiatek5;
+            public TileBase[] Kwiatek6;
+            public TileBase[] Kwiatek7;
+            public TileBase[] Kwiatek8;
+            public TileBase[] Kwiatek9;
+            public TileBase[] Kwiatek10;
+            public TileBase[] Kwiatek11;
+            public TileBase[] Kwiatek12;
+            public TileBase[] Kwiatek13;
+            public TileBase[] Kwiatek14;
+        }
         public void GenerateFlowers()
         {
             tilemap.ClearAllTiles();
             for (int i = 0; i < Random.Range(0, FlowersChance * (FlowersBMapHeigh * FlowersBMapWidth)); i++)
             {
+                int random = Random.Range(1, 15);
+                switch (random)
+                {
+                    case 1:
+                        this.currentTileBase = KwiatkiC.Kwiatek1;
+                        break;
+                    case 2:
+                        this.currentTileBase = KwiatkiC.Kwiatek2;
+                        break;
+                    case 3:
+                        this.currentTileBase = KwiatkiC.Kwiatek3;
+                        break;
+                    case 4:
+                        this.currentTileBase = KwiatkiC.Kwiatek4;
+                        break;
+                    case 5:
+                        this.currentTileBase = KwiatkiC.Kwiatek5;
+                        break;
+                    case 6:
+                        this.currentTileBase = KwiatkiC.Kwiatek6;
+                        break;
+                    case 7:
+                        this.currentTileBase = KwiatkiC.Kwiatek7;
+                        break;
+                    case 8:
+                        this.currentTileBase = KwiatkiC.Kwiatek8;
+                        break;
+                    case 9:
+                        this.currentTileBase = KwiatkiC.Kwiatek9;
+                        break;
+                    case 10:
+                        this.currentTileBase = KwiatkiC.Kwiatek10;
+                        break;
+                    case 11:
+                        this.currentTileBase = KwiatkiC.Kwiatek11;
+                        break;
+                    case 12:
+                        this.currentTileBase = KwiatkiC.Kwiatek12;
+                        break;
+                    case 13:
+                        this.currentTileBase = KwiatkiC.Kwiatek13;
+                        break;
+                    case 14:
+                        this.currentTileBase = KwiatkiC.Kwiatek14;
+                        break;
+                }
                 int x = Random.Range(0, FlowersBMapWidth);
                 int y = Random.Range(0, FlowersBMapHeigh);
                 Vector3Int tilePosition = new(x, y, 0);
@@ -104,16 +169,14 @@ public class MapGenerator : MonoBehaviour
                     xend += Random.Range(-AddFlowersDistacne, AddFlowersDistacne);
                     yend += Random.Range(-AddFlowersDistacne, AddFlowersDistacne);
                     Vector3Int tilePositionend = new(xend, yend, 0);
-                    tilemap.SetTile(tilePositionend, FlowersBig[CurrentFlower]);
+                    tilemap.SetTile(tilePositionend, GetRandomTile());
                 }
             }
         }
         TileBase GetRandomTile()
         {
-
-            int randomIndex = Random.Range(0, FlowersBig.Length);
-            CurrentFlower = randomIndex;
-            return FlowersBig[randomIndex];
+            int randomIndex = Random.Range(0, currentTileBase.Length);
+            return currentTileBase[randomIndex];
         }
     }
 
